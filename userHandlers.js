@@ -28,6 +28,21 @@ const postUsers = (req, res) => {
 };
 
 
+const putUsers = (req, res) => {
+  database
+    .query("UPDATE users SET ? WHERE id= ?", [
+      req.body,
+      req.params.id
+    ])
+    .then(([users]) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const getUserById = (req, res) => {
     const id = parseInt(req.params.id);
   
@@ -45,4 +60,4 @@ const getUserById = (req, res) => {
         res.status(500).send("Error retrieving data from database");
       });
   };
-module.exports = {getUsers,getUserById, postUsers};
+module.exports = {getUsers,getUserById, postUsers, putUsers};
