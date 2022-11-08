@@ -1,3 +1,4 @@
+
 const database = require("./database")
 
 const getUsers = (req, res) => {
@@ -6,6 +7,26 @@ const getUsers = (req, res) => {
         res.status(200).json(i[0])
     })
 }
+
+const postUsers = (req, res) => {
+  const body = req.body;
+  database
+    .query("INSERT INTO users (firstname, lastname, email, city, language) VALUES (?,?,?,?,?)", [
+      body.firstname,
+      body.lastname,
+      body.email,
+      body.city,
+      body.language
+    ])
+    .then(([users]) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 
 const getUserById = (req, res) => {
     const id = parseInt(req.params.id);
@@ -24,4 +45,4 @@ const getUserById = (req, res) => {
         res.status(500).send("Error retrieving data from database");
       });
   };
-module.exports = {getUsers,getUserById};
+module.exports = {getUsers,getUserById, postUsers};
