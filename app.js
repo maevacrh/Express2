@@ -16,14 +16,15 @@ const welcome = (req, res) => {
 app.get("/", welcome);
 
 const movieHandlers = require("./movieHandlers");
-const { getUsers, getUserById, postUsers, putUsers } = require("./userHandlers");
+const { getUsers, getUserById, postUsers, putUsers, deleteUsers} = require("./userHandlers");
 
 app.get("/api/movies", movieHandlers.getMovies);
 app.get("/api/movies/:id", movieHandlers.getMovieById);
 app.get("/api/users", getUsers);
 app.get("/api/users/:id", getUserById);
 app.post("/api/users",postUsers);
-app.put("/api/users/:id", putUsers)
+app.put("/api/users/:id", putUsers);
+app.delete("/api/users/:id", deleteUsers);
 
 
 
